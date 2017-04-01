@@ -8,6 +8,7 @@ if [ "$#" -ne 5 ]; then
     echo "12.04 precise"
     echo "13.04 raring"
     echo "14.04 trusty"
+    echo "16.04 xenial"
     exit
 fi
 
