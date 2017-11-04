@@ -130,7 +130,11 @@ if [ $UBUNTU_VERSION = "precise" ] || [ $UBUNTU_VERSION = "raring" ] ; then
 elif [ $UBUNTU_VERSION = "xenial" ] ; then
     LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort | awk '{print $1}'`
     LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort | awk '{print $1}' | tail -n1`
+<<<<<<< HEAD
     LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-4 | grep generic | sort | awk '{print $1}' | tail -n1`
+=======
+    LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-3 | grep generic | sort | awk '{print $1}' | tail -n1`
+>>>>>>> 9943863dc5cda700818c2ff3faaf0eb57edc536d
     echo LATEST_KERNEL_IMAGES=$LATEST_KERNEL_IMAGES
     echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
     echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
