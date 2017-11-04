@@ -127,6 +127,14 @@ apt-get update && apt-get -y dist-upgrade
 apt-get install -y linux-firmware
 if [ $UBUNTU_VERSION = "precise" ] || [ $UBUNTU_VERSION = "raring" ] ; then
     apt-get install -y linux-image
+elif [ $UBUNTU_VERSION = "xenial" ] ; then
+    LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort | awk '{print $1}'`
+    LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort | awk '{print $1}' | tail -n1`
+    LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-4 | grep generic | sort | awk '{print $1}' | tail -n1`
+    echo LATEST_KERNEL_IMAGES=$LATEST_KERNEL_IMAGES
+    echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
+    echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
+    apt-get install -y $LATEST_KERNEL_IMAGE $LATEST_KERNEL_IMAGE_EXTRA
 else
     LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort | awk '{print $1}'`
     LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort | awk '{print $1}' | tail -n1`
