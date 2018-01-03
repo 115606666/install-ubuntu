@@ -135,6 +135,9 @@ elif [ $UBUNTU_VERSION = "xenial" ] ; then
     echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
     echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
     apt-get install -y $LATEST_KERNEL_IMAGE $LATEST_KERNEL_IMAGE_EXTRA
+    # Can't shutdown without dbus
+    # Failed to connect to bus: No such file or directory
+    apt-get install -y dbus
 else
     LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}'`
     LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}' | tail -n1`
