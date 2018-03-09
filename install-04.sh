@@ -128,10 +128,9 @@ apt-get install -y linux-firmware
 if [ $UBUNTU_VERSION = "precise" ] || [ $UBUNTU_VERSION = "raring" ] ; then
     apt-get install -y linux-image
 elif [ $UBUNTU_VERSION = "xenial" ] ; then
-    LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort -V | awk '{print $1}'`
-    LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort -V | awk '{print $1}' | tail -n1`
-    LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-4 | grep generic | sort -V | awk '{print $1}' | tail -n1`
-    echo LATEST_KERNEL_IMAGES=$LATEST_KERNEL_IMAGES
+    # Bug in kernel 4.13 HWE for change display resolution https://goo.gl/5RCPMP
+    LATEST_KERNEL_IMAGE=linux-image-generic-lts-xenial
+    LATEST_KERNEL_IMAGE_EXTRA=linux-image-extra-virtual-lts-xenial
     echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
     echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
     apt-get install -y $LATEST_KERNEL_IMAGE $LATEST_KERNEL_IMAGE_EXTRA
