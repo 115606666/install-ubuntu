@@ -17,7 +17,7 @@ UBUNTU_VERSION=$2
 DISK=$3
 
 echo HERE02
-#export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 
 
@@ -69,13 +69,18 @@ none /var/lock tmpfs rw,noexec,nosuid,nodev 0 0
 none /lib/init/rw tmpfs rw,nosuid,mode=0755 0 0
 __EOF
 
+if [ $UBUNTU_VERSION = "xenial" ] ; then
+    NETWORK_INTERFACE=ens3
+else
+    NETWORK_INTERFACE=eth0
+fi
 cat > /etc/network/interfaces << __EOF
 # interfaces(5) file used by ifup(8) and ifdown(8)
 auto lo
 iface lo inet loopback
 
-auto eth0
-iface eth0 inet dhcp
+auto ${NETWORK_INTERFACE}
+iface ${NETWORK_INTERFACE} inet dhcp
 __EOF
 
 cat >> /etc/hosts << __EOF
@@ -101,6 +106,7 @@ echo /etc/hostname
 cat /etc/hostname
 
 
+
 # Below by
 # apt-get install debconf-utils
 # debconf-get-selections | grep grub-pc
@@ -110,7 +116,7 @@ grub-pc	grub2/linux_cmdline_default	string
 grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
 grub-pc	grub2/linux_cmdline	string
 grub-pc	grub-pc/timeout	string	10
-grub-pc	grub-pc/install_devices_disks_changed	multiselect
+grub-pc	grub-pc/install_devices_disks_changed	multiselect    ${DISK}
 grub-pc	grub-pc/kopt_extracted	boolean	false
 grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
 grub-pc	grub-pc/chainload_from_menu.lst	boolean	true
@@ -120,6 +126,14 @@ grub-pc	grub2/device_map_regenerated	note
 grub-pc	grub-pc/install_devices_failed_upgrade	boolean	true
 grub-pc	grub-pc/install_devices_failed	boolean	false
 grub-pc	grub2/kfreebsd_cmdline	string" | debconf-set-selections
+
+#echo "!!!!!! HERE01"
+#apt-get -y install grub-pc
+#echo "!!!!!! HERE02"
+#grub-install ${DISK}
+#echo "!!!!!! HERE03"
+#update-gurb
+#echo "!!!!!! HERE04"
 
 
 apt-get update && apt-get -y dist-upgrade
@@ -150,17 +164,25 @@ fi
 #grub-install --help
 #grub-install /dev/sda
 
+apt-get install -y openssh-server vim
 
+echo ------------------------------------------------------------------
+echo blkid
 blkid
-UUID_SDA1=`blkid | grep ${DISK}1 | awk '{print $2}' | cut -c7- | cut -c-36`
-UUID_SDA2=`blkid | grep ${DISK}2 | awk '{print $2}' | cut -c7- | cut -c-36`
-echo UUID_SDA1=${UUID_SDA1}
-echo UUID_SDA2=${UUID_SDA2}
+UUID_SDx1=`blkid | grep ${DISK}1 | awk '{print $2}' | cut -c7- | cut -c-36`
+UUID_SDx2=`blkid | grep ${DISK}2 | awk '{print $2}' | cut -c7- | cut -c-36`
+echo UUID_SDx1=${UUID_SDx1}
+echo UUID_SDx2=${UUID_SDx2}
+echo ------------------------------------------------------------------
+echo Before
 cat /etc/fstab
+echo ------------------------------------------------------------------
 echo "proc            /proc           proc    nodev,noexec,nosuid 0       0" >> /etc/fstab
-echo "UUID=${UUID_SDA1} /               ext4    errors=remount-ro 0       1" >> /etc/fstab
-echo "UUID=${UUID_SDA2} none            swap    sw              0       0" >> /etc/fstab
+echo "UUID=${UUID_SDx1} /               ext4    errors=remount-ro 0       1" >> /etc/fstab
+echo "UUID=${UUID_SDx2} none            swap    sw              0       0" >> /etc/fstab
+echo After
 cat /etc/fstab
+echo ------------------------------------------------------------------
 
 echo | adduser --quiet --disabled-password mike
 echo "mike:aaaaaa" | chpasswd
