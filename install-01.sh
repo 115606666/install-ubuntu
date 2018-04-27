@@ -23,11 +23,13 @@ sudo apt-get update
 sudo apt-get install -y openssh-server
 sudo service ssh restart
 
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIBov/V1m4uuqc4Sl4ZxmibN5g94YvBFGLGVHnmRdkmn2g+pfpsxl9jfwdRFPprzUdzp/jROihKBRA3JmInoMh55b9P2Ak4iPeUuGsQHweaBlgtqnWoukoDh5X0Q6atBXs44QAxeuc8fckm6JWq2uhYIrbbKegtNHN2VRAeAekmVCQ== AVNET" > authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOdfDL2rt6w7rwfT5NF8yYS/4fH9TEXGJIXpeuzDaRdKpNdQw9xwfhrTdH4UQdyu6roQfi0k9L/HWvoH93sIOjcXBf2+nKokqEQxQDVcJJ2eNVR2KsVddCseqkoOtiTK7of7fRI8vO0ZAIzrKu49Qw/jMIvujHKkx6rBSvrWxNqMuPkKrOzHrkM/EA+6kAPgcYtMOdc0DFytOFjIiLksMkthGGTcB0hr/Sfa9CxMIBP54M9jZtV4BqDuvFHrAbG23to8CDZB16MEJrKY47fdvjw2iQ5kAIgvmPYCsHb2YHjRpKEGkT77B/LOcVy5kCWFzW7Ox5ct15PQyF3X8uiCpd" > authorized_keys
 chmod 644 authorized_keys
 sudo mkdir /home/$USERNAME/.ssh
 sudo chmod 711 /home/$USERNAME/.ssh
 sudo mv authorized_keys /home/$USERNAME/.ssh
 sudo chown -R mike.mike /home/$USERNAME/.ssh
+
+echo $USERNAME ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 
 ifconfig
