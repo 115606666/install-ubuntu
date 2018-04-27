@@ -190,7 +190,7 @@ echo "mike:aaaaaa" | chpasswd
 
 HOME_DIR=/home/mike
 ls -la ${HOME_DIR}
-mkdir -p $(HOME_DIR}/.ssh
+mkdir -p ${HOME_DIR}/.ssh
 echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOdfDL2rt6w7rwfT5NF8yYS/4fH9TEXGJIXpeuzDaRdKpNdQw9xwfhrTdH4UQdyu6roQfi0k9L/HWvoH93sIOjcXBf2+nKokqEQxQDVcJJ2eNVR2KsVddCseqkoOtiTK7of7fRI8vO0ZAIzrKu49Qw/jMIvujHKkx6rBSvrWxNqMuPkKrOzHrkM/EA+6kAPgcYtMOdc0DFytOFjIiLksMkthGGTcB0hr/Sfa9CxMIBP54M9jZtV4BqDuvFHrAbG23to8CDZB16MEJrKY47fdvjw2iQ5kAIgvmPYCsHb2YHjRpKEGkT77B/LOcVy5kCWFzW7Ox5ct15PQyF3X8uiCpd mike@box43 > ${HOME_DIR}/.ssh/authorized_keys
 
 chmod go-w ${HOME_DIR}
