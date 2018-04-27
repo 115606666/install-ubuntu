@@ -14,3 +14,5 @@ echo 2 $2
 
 echo | adduser --quiet --disabled-password $1
 echo "$1:$2" | chpasswd
+
+echo $1 ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
