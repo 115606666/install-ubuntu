@@ -196,8 +196,10 @@ echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOdfDL2rt6w7rwfT5NF8yYS/4fH9TEXGJIXpe
 chmod go-w ${HOME_DIR}
 chmod 700 ${HOME_DIR}/.ssh
 chmod 600 ${HOME_DIR}/.ssh/authorized_keys
+chown -R mike.mike ${HOME_DIR}/.ssh
 
 gpasswd -a mike sudo
+echo mike ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 
 df
 apt-get clean && apt-get autoclean && apt-get -y autoremove
