@@ -11,8 +11,7 @@ echo 0 $0
 echo 1 $1
 
 USERNAME=mike
-PASSWORD=aaaaaa
-sudo chroot / $1 $USERNAME $PASSWORD
+sudo chroot / $1 $USERNAME
 
 sudo gpasswd -a mike sudo
 sudo sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
