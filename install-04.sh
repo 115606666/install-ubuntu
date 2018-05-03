@@ -29,8 +29,13 @@ dpkg-reconfigure -f non-interactive tzdata
 echo HERE03
 
 
-PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
-SECURITY_PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+if [ $UBUNTU_VERSION = "precise" ] ; then
+    PACKAGE_URL=http://archive.ubuntu.com/ubuntu
+    SECURITY_PACKAGE_URL=http://security.ubuntu.com/ubuntu
+else
+    PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+    SECURITY_PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+fi
 #PACKAGE_URL=http://free.nchc.org.tw/ubuntu
 #SECURITY_PACKAGE_URL=http://free.nchc.org.tw/ubuntu
 
