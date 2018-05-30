@@ -26,7 +26,6 @@ echo 'LANG="en_US.UTF-8"' >  /etc/default/locale
 #echo 'Asia/Taipei' > /etc/timezone
 locale-gen en_US.UTF-8
 #dpkg-reconfigure -f non-interactive tzdata
-timedatectl set-timezone Asia/Taipei
 echo HERE03
 
 
@@ -210,6 +209,7 @@ echo StrictHostKeyChecking no >> /etc/ssh/ssh_config
 gpasswd -a mike sudo
 echo mike ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 
+timedatectl set-timezone Asia/Taipei
 df
 apt-get clean && apt-get autoclean && apt-get -y autoremove
 date +%Y%m%d%H%M%S
