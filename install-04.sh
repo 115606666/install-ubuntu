@@ -21,11 +21,12 @@ export DEBIAN_FRONTEND=noninteractive
 
 
 
-cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+#cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 echo 'LANG="en_US.UTF-8"' >  /etc/default/locale
-echo 'Asia/Taipei' > /etc/timezone
+#echo 'Asia/Taipei' > /etc/timezone
 locale-gen en_US.UTF-8
-dpkg-reconfigure -f non-interactive tzdata
+#dpkg-reconfigure -f non-interactive tzdata
+timedatectl set-timezone Asia/Taipei
 echo HERE03
 
 
@@ -203,6 +204,8 @@ chmod go-w ${HOME_DIR}
 chmod 700 ${HOME_DIR}/.ssh
 chmod 600 ${HOME_DIR}/.ssh/authorized_keys
 chown -R mike.mike ${HOME_DIR}/.ssh
+
+echo StrictHostKeyChecking no >> /etc/ssh/ssh_config
 
 gpasswd -a mike sudo
 echo mike ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
