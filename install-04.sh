@@ -79,6 +79,8 @@ __EOF
 
 if [ $UBUNTU_VERSION = "xenial" ] ; then
     NETWORK_INTERFACE=ens3
+elif [ $UBUNTU_VERSION = "bionic" ] ; then
+    NETWORK_INTERFACE=ens3
 else
     NETWORK_INTERFACE=eth0
 fi
