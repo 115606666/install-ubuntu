@@ -84,7 +84,17 @@ elif [ $UBUNTU_VERSION = "bionic" ] ; then
 else
     NETWORK_INTERFACE=eth0
 fi
-cat > /etc/network/interfaces << __EOF
+
+if [ $UBUNTU_VERSION = "bionic" ] ; then
+    cat > /etc/netplan/01-netcfg.yaml << __EOF
+network:
+        version: 2
+        ethernets:
+                ${NETWORK_INTERFACE}:
+                        dhcp4: true
+__EOF
+else
+    cat > /etc/network/interfaces << __EOF
 # interfaces(5) file used by ifup(8) and ifdown(8)
 auto lo
 iface lo inet loopback
@@ -92,6 +102,7 @@ iface lo inet loopback
 auto ${NETWORK_INTERFACE}
 iface ${NETWORK_INTERFACE} inet dhcp
 __EOF
+fi
 
 cat >> /etc/hosts << __EOF
 127.0.1.1       ${HOST_NAME}.localdomain ${HOST_NAME}
