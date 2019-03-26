@@ -33,4 +33,4 @@ sudo chown -R mike.mike /home/$USERNAME/.ssh
 
 echo $USERNAME ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 
-ifconfig
+ip a
