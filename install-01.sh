@@ -14,14 +14,14 @@ USERNAME=mike
 sudo chroot / $1 $USERNAME
 
 sudo gpasswd -a mike sudo
-#sudo sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
-#sudo sed -i 's/security.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
+sudo sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
+sudo sed -i 's/security.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
 #sudo sed -i 's/archive.ubuntu.com/free.nchc.org.tw/g' /etc/apt/sources.list
 #sudo sed -i 's/security.ubuntu.com/free.nchc.org.tw/g' /etc/apt/sources.list
 # https://blog.elleryq.idv.tw/2018/11/apt-mirror.html
 # http://mirrors.ubuntu.com/mirrors.txt
-sudo sed -i 's/archive.ubuntu.com/ftp.yzu.edu.tw/g' /etc/apt/sources.list
-sudo sed -i 's/security.ubuntu.com/ftp.yzu.edu.tw/g' /etc/apt/sources.list
+#sudo sed -i 's/archive.ubuntu.com/ftp.yzu.edu.tw/g' /etc/apt/sources.list
+#sudo sed -i 's/security.ubuntu.com/ftp.yzu.edu.tw/g' /etc/apt/sources.list
 sudo apt-get update
 sudo apt-get install -y openssh-server
 sudo service ssh restart

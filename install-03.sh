@@ -91,11 +91,11 @@ sudo apt-get install -y debootstrap
 
 
 
-#PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
 #PACKAGE_URL=http://free.nchc.org.tw/ubuntu
 # https://blog.elleryq.idv.tw/2018/11/apt-mirror.html
 # http://mirrors.ubuntu.com/mirrors.txt
-ACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
+#ACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
 
 cat << __EOF
 PACKAGE_URL:    ${PACKAGE_URL}

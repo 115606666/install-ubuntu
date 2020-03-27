@@ -36,12 +36,12 @@ if [ $UBUNTU_VERSION = "precise" ] ; then
     PACKAGE_URL=http://archive.ubuntu.com/ubuntu
     SECURITY_PACKAGE_URL=http://security.ubuntu.com/ubuntu
 else
-    #PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
-    #SECURITY_PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+    PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
+    SECURITY_PACKAGE_URL=http://mirror01.idc.hinet.net/ubuntu
     # https://blog.elleryq.idv.tw/2018/11/apt-mirror.html
     # from http://mirrors.ubuntu.com/mirrors.txt
-    PACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
-    SECURITY_PACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
+    #PACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
+    #SECURITY_PACKAGE_URL=http://ftp.yzu.edu.tw/ubuntu
 fi
 #PACKAGE_URL=http://free.nchc.org.tw/ubuntu
 #SECURITY_PACKAGE_URL=http://free.nchc.org.tw/ubuntu
