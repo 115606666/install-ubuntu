@@ -96,8 +96,15 @@ grub-pc	grub-efi/install_devices_failed	boolean	false
 grub-pc	grub2/linux_cmdline_default	string	
 grub-pc	grub-pc/install_devices	multiselect	$DISK_NAME" | debconf-set-selections
 
-    apt-get -y install linux-image-5.4.0-42-generic \
-                       linux-modules-extra-5.4.0-42-generic  \
+    local LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}'`
+    local LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+    local LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+    echo LATEST_KERNEL_IMAGES=$LATEST_KERNEL_IMAGES
+    echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
+    echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
+
+    apt-get -y install $LATEST_KERNEL_IMAGE \
+                       $LATEST_KERNEL_IMAGE_EXTRA  \
                        linux-firmware
 }
 
@@ -128,7 +135,7 @@ function install_extra_packages() {
 function setup_network() {
     # determine network interface
     if [ $UBUNTU_VERSION = "focal" ] ; then
-        NETWORK_INTERFACE=ens3
+        NETWORK_INTERFACE=enp1s0
     else
         echo "setup_network() not support $UBUNTU_VERSION yet."
         return
