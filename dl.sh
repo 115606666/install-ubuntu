@@ -9,3 +9,5 @@ wget https://raw.githubusercontent.com/115606666/install-ubuntu/master/install-u
 wget https://raw.githubusercontent.com/115606666/install-ubuntu/master/setup-ubuntu.sh
 
 chmod +x install-*.sh
+chmod +x init-installer.sh
+chmod +x setup-ubuntu.sh
