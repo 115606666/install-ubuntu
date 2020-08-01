@@ -291,6 +291,11 @@ function setup_machine() {
     rm ${INSTALLER_PATH}/setup-ubuntu.sh
 }
 
+function copy_log() {
+    # copy log to install disk before umount
+    cp "$log" ${INSTALLER_PATH}
+}
+
 copyright_msg
 
 # Check we are running on a supported system in the correct way.
@@ -362,4 +367,5 @@ do_debootstrap
 create_swap_file
 mount_for_setup_machine
 setup_machine
+copy_log
 umount_disk
