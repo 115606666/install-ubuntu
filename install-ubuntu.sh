@@ -292,7 +292,6 @@ copyright_msg
 check_root
 check_sudo
 check_ubuntu "all"
-check_tools
 
 # Init variables
 INSTALLER_PATH="/mnt/installer"
@@ -348,6 +347,7 @@ if [ -z $DISK_NAME ]; then
     usage && exit
 fi
 
+check_tools
 umount_disk
 clean_disk
 partition_disk
