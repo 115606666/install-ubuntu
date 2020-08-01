@@ -205,6 +205,11 @@ function change_apt_sources() {
     pid=$!;progress $pid
 }
 
+function install_debootstrap() {
+    apt-get -y install debootstrap >>"$log" 2>&1 &
+    pid=$!;progress $pid
+}
+
 function install_openssh_server() {
     ncecho " [x] Install openssh server "
     sudo apt-get update >>"$log" 2>&1
@@ -274,6 +279,7 @@ cecho
 
 add_user
 change_apt_sources
+install_debootstrap
 install_openssh_server
 start_openssh_server
 install_openssh_keys
