@@ -214,7 +214,7 @@ function install_debootstrap() {
 
 function install_openssh_server() {
     ncecho " [x] Install openssh server "
-    apt-get install -y openssh-server >>"$log" 2>&1
+    apt-get install -y openssh-server >>"$log" 2>&1 &
     pid=$!;progress $pid
 }
 
