@@ -5,12 +5,13 @@ function usage() {
     cat << __EOF
 $0 DISK_NAME HOST_NAME UBUNTU_VERSION PACKAGE_URL USERNAME PASSWORD
 Example:
-    DISK_NAME:      /dev/vda
-    HOST_NAME:      box549
-    UBUNTU_VERSION: focal
-    PACKAGE_URL:    http://mirror01.idc.hinet.net/ubuntu
-    USERNAME:       mike
-    PASSWORD:       aaaaaa
+    DISK_NAME:         /dev/vda
+    HOST_NAME:         box549
+    UBUNTU_VERSION:    focal
+    PACKAGE_URL:       http://mirror01.idc.hinet.net/ubuntu
+    USERNAME:          mike
+    PASSWORD:          aaaaaa
+    NETWORK_INTERFACE: ens3 or enp1s0
 __EOF
 }
 
@@ -133,14 +134,6 @@ function install_extra_packages() {
 }
 
 function setup_network() {
-    # determine network interface
-    if [ $UBUNTU_VERSION = "focal" ] ; then
-        NETWORK_INTERFACE=enp1s0
-    else
-        echo "setup_network() not support $UBUNTU_VERSION yet."
-        return
-    fi
-
     # setup network setting file
     if [ $UBUNTU_VERSION = "focal" ] ; then
         cat > /etc/netplan/01-netcfg.yaml << __EOF
