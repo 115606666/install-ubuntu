@@ -183,10 +183,8 @@ function usage() {
     echo "Optional parameters"
     echo
     echo "  * -m <machine-name>      : Machine name."
-    echo "  * -c <#-of-CPUs>         : Number of CPU cores."
     echo "  * -d </dev/vdx>          : Install disk device."
-    echo "  * -s <disk-size-M>       : Disk size in mega bytes."
-    echo "  * -w <swap-size-M>       : SWAP size in mega bytes."
+    echo "  * -s <swap-size-M>       : SWAP size in mega bytes."
     echo "  * -a <arch>              : i386, amd64, armhf, ..."
     echo "  * -u <ubuntu-version>    : lucid, precise, trusty, xenial, bionic, focal"
     echo "  * -p <package-url>       : http://mirror01.idc.hinet.net/ubuntu"
@@ -310,7 +308,6 @@ INSTALLER_PATH="/mnt/installer"
 VM_NAME=""
 NUM_CPUS=0
 DISK_NAME=""
-DISK_SIZE=0
 SWAP_SIZE=0
 ARCH=""
 UBUNTU_VERSION=""
@@ -323,12 +320,11 @@ if [ -f $log ]; then
 fi
 
 # Parse the options
-OPTSTRING=a:c:d:e:hm:o:p:s:u:w:
+OPTSTRING=a:d:e:hi:m:o:p:s:u:
 while getopts ${OPTSTRING} OPT
 do
     case ${OPT} in
         a) ARCH=$OPTARG;;
-        c) NUM_CPUS=$OPTARG;;
         d) DISK_NAME=$OPTARG;;
         e) USERNAME=$OPTARG;;
         h) usage;;
@@ -336,9 +332,8 @@ do
         m) VM_NAME=$OPTARG;;
         o) PASSWORD=$OPTARG;;
         p) PACKAGE_URL=$OPTARG;;
-        s) DISK_SIZE=$OPTARG;;
+        s) SWAP_SIZE=$OPTARG;;
         u) UBUNTU_VERSION=$OPTARG;;
-        w) SWAP_SIZE=$OPTARG;;
         *) usage;;
     esac
 done
@@ -348,7 +343,6 @@ shift "$(( $OPTIND - 1 ))"
 cecho VM_NAME=$VM_NAME
 cecho NUM_CPUS=$NUM_CPUS
 cecho DISK_NAME=$DISK_NAME
-cecho DISK_SIZE=$DISK_SIZE
 cecho SWAP_SIZE=$SWAP_SIZE
 cecho ARCH=$ARCH
 cecho UBUNTU_VERSION=$UBUNTU_VERSION
