@@ -182,19 +182,20 @@ function usage() {
     echo
     echo "Optional parameters"
     echo
-    echo "  * -m <machine-name>   : Machine name."
-    echo "  * -c <#-of-CPUs>      : Number of CPU cores."
-    echo "  * -d </dev/vdx>       : Install disk device."
-    echo "  * -s <disk-size-M>    : Disk size in mega bytes."
-    echo "  * -w <swap-size-M>    : SWAP size in mega bytes."
-    echo "  * -a <arch>           : i386, amd64, armhf, ..."
-    echo "  * -u <ubuntu-version> : lucid, precise, trusty, xenial, bionic, focal"
-    echo "  * -p <package-url>    : http://mirror01.idc.hinet.net/ubuntu"
-    echo "  * -e <username>       : mike"
-    echo "  * -o <password>       : aaaaaa"
-    echo "  * -h                  : This help"
+    echo "  * -m <machine-name>      : Machine name."
+    echo "  * -c <#-of-CPUs>         : Number of CPU cores."
+    echo "  * -d </dev/vdx>          : Install disk device."
+    echo "  * -s <disk-size-M>       : Disk size in mega bytes."
+    echo "  * -w <swap-size-M>       : SWAP size in mega bytes."
+    echo "  * -a <arch>              : i386, amd64, armhf, ..."
+    echo "  * -u <ubuntu-version>    : lucid, precise, trusty, xenial, bionic, focal"
+    echo "  * -p <package-url>       : http://mirror01.idc.hinet.net/ubuntu"
+    echo "  * -e <username>          : mike"
+    echo "  * -o <password>          : aaaaaa"
+    echo "  * -i <network-interface> : ens3 for kvm, enp1s0 for real machine"
+    echo "  * -h                     : This help"
     echo
-    echo "sudo ./install.sh -m box549 -c 2 -d /dev/vdb -s 4096 -w 512 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e mike -o aaaaaa"
+    echo "sudo ./install.sh -m box549 -c 2 -d /dev/vdb -s 4096 -w 512 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e mike -o aaaaaa -i enp1s0"
 }
 
 function check_tools() {
@@ -269,7 +270,7 @@ function create_swap_file() {
     fallocate -l ${SWAP_SIZE}M ${INSTALLER_PATH}/swapfile >>"$log" 2>&1 &
     pid=$!;progress $pid
 
-    mkswap $INSTALLER_PATH >>"$log" 2>&1
+    mkswap $INSTALLER_PATH/swapfile >>"$log" 2>&1
     ls -la $INSTALLER_PATH >>"$log" 2>&1
     df >>"$log" 2>&1
 }
@@ -286,7 +287,7 @@ function setup_machine() {
     ncecho " [x] Setup machine "
     cp setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
     chmod +x setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
-    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD >>"$log" 2>&1 &
+    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETOWRK_INTERFACE >>"$log" 2>&1 &
     pid=$!;progress $pid
     df >>"$log" 2>&1
     rm ${INSTALLER_PATH}/setup-ubuntu.sh
@@ -314,6 +315,7 @@ SWAP_SIZE=0
 ARCH=""
 UBUNTU_VERSION=""
 PACKAGE_URL=""
+NETOWRK_INTERFACE="ens3"
 
 # Remove a pre-existing log file.
 if [ -f $log ]; then
@@ -330,6 +332,7 @@ do
         d) DISK_NAME=$OPTARG;;
         e) USERNAME=$OPTARG;;
         h) usage;;
+        i) NETOWRK_INTERFACE=$OPTARG;;
         m) VM_NAME=$OPTARG;;
         o) PASSWORD=$OPTARG;;
         p) PACKAGE_URL=$OPTARG;;
@@ -352,6 +355,7 @@ cecho UBUNTU_VERSION=$UBUNTU_VERSION
 cecho PACKAGE_URL=$PACKAGE_URL
 cecho USERNAME=$USERNAME
 cecho PASSWORD=$PASSWORD
+cecho NETOWRK_INTERFACE=$NETOWRK_INTERFACE
 cecho
 
 if [ -z $DISK_NAME ]; then

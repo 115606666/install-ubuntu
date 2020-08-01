@@ -214,6 +214,7 @@ echo argv[3]=$3
 echo argv[4]=$4
 echo argv[5]=$5
 echo argv[6]=$6
+echo argv[7]=$7
 
 DISK_NAME=$1
 HOST_NAME=$2
@@ -221,6 +222,7 @@ UBUNTU_VERSION=$3
 PACKAGE_URL=$4
 USERNAME=$5
 PASSWORD=$6
+NETOWRK_INTERFACE=$7
 
 echo DISK_NAME=$DISK_NAME
 echo HOST_NAME=$HOST_NAME
@@ -228,8 +230,9 @@ echo UBUNTU_VERSION=$UBUNTU_VERSION
 echo PACKAGE_URL=$PACKAGE_URL
 echo USERNAME=$USERNAME
 echo PASSWORD=$PASSWORD
+echo NETOWRK_INTERFACE=$NETOWRK_INTERFACE
 
-if [ "$#" -ne 6 ]; then
+if [ "$#" -ne 7 ]; then
     usage && exit
 fi
 
