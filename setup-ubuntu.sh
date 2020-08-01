@@ -171,6 +171,11 @@ function apt_clean() {
     apt-get -y autoremove
 }
 
+function apt_upgrade() {
+    apt-get update
+    apt-get dist-upgrade
+}
+
 function setup_grub() {
     sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
     print_file /etc/default/grub
@@ -233,4 +238,5 @@ install_openssh
 install_extra_packages
 install_kernel
 setup_grub
+apt_upgrade
 apt_clean

@@ -263,9 +263,10 @@ function do_debootstrap() {
 
 function create_swap_file() {
     ncecho " [x] Create swap file "
-    local DD_BS=64
-    local DD_COUNT=`echo $SWAP_SIZE / $DD_BS | bc`
-    dd if=/dev/zero of=$INSTALLER_PATH/swapfile bs=${DD_BS}M count=$DD_COUNT >>"$log" 2>&1 &
+    #local DD_BS=64
+    #local DD_COUNT=`echo $SWAP_SIZE / $DD_BS | bc`
+    #dd if=/dev/zero of=$INSTALLER_PATH/swapfile bs=${DD_BS}M count=$DD_COUNT >>"$log" 2>&1 &
+    fallocate -l ${SWAP_SIZE}M ${INSTALLER_PATH}/swapfile >>"$log" 2>&1 &
     pid=$!;progress $pid
 
     mkswap $INSTALLER_PATH >>"$log" 2>&1
