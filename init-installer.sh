@@ -200,8 +200,8 @@ function add_user() {
 
 function change_apt_sources() {
     ncecho " [x] Change apt sources "
-    sudo sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g'  /etc/apt/sources.list
-    sudo sed -i 's/security.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
+    sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g'  /etc/apt/sources.list
+    sed -i 's/security.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
     apt-get update >>"$log" 2>&1 &
     pid=$!;progress $pid
 }
@@ -214,14 +214,13 @@ function install_debootstrap() {
 
 function install_openssh_server() {
     ncecho " [x] Install openssh server "
-    sudo apt-get update >>"$log" 2>&1
-    sudo apt-get install -y openssh-server >>"$log" 2>&1
+    apt-get install -y openssh-server >>"$log" 2>&1
     pid=$!;progress $pid
 }
 
 function start_openssh_server() {
     ncecho " [x] Start openssh server "
-    sudo service ssh restart >>"$log" 2>&1
+    service ssh restart >>"$log" 2>&1
     pid=$!;progress $pid
 }
 
