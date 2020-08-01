@@ -279,9 +279,9 @@ function mount_for_setup_machine() {
 
 function setup_machine() {
     ncecho " [x] Setup machine "
-    cp setup.sh /mnt/installer >>"$log" 2>&1
-    chmod +x setup.sh /mnt/installer >>"$log" 2>&1
-    chroot $INSTALLER_PATH ./setup.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD >>"$log" 2>&1 &
+    cp setup-ubuntu.sh /mnt/installer >>"$log" 2>&1
+    chmod +x setup-ubuntu.sh /mnt/installer >>"$log" 2>&1
+    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD >>"$log" 2>&1 &
     pid=$!;progress $pid
     df >>"$log" 2>&1
 }
