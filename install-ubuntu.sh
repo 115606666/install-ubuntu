@@ -214,7 +214,7 @@ function clean_disk() {
 
 function partition_disk() {
     ncecho " [x] Partition disk "
-    parted $DISK_NAME -s "mklabel msdos mkpart primary ext4 1 -1 print" >>"$log" 2>&1 &
+    parted $DISK_NAME -s "mklabel msdos mkpart primary ext4 1 -1 set 1 boot on print" >>"$log" 2>&1 &
     pid=$!;progress $pid
 }
 
