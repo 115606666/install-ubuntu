@@ -202,10 +202,12 @@ function change_apt_sources() {
     ncecho " [x] Change apt sources "
     sudo sed -i 's/archive.ubuntu.com/mirror01.idc.hinet.net/g'  /etc/apt/sources.list
     sudo sed -i 's/security.ubuntu.com/mirror01.idc.hinet.net/g' /etc/apt/sources.list
+    apt-get update >>"$log" 2>&1 &
     pid=$!;progress $pid
 }
 
 function install_debootstrap() {
+    ncecho " [x] Install debootstrap "
     apt-get -y install debootstrap >>"$log" 2>&1 &
     pid=$!;progress $pid
 }
