@@ -285,7 +285,7 @@ function setup_machine() {
     ncecho " [x] Setup machine "
     cp setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
     chmod +x setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
-    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETOWRK_INTERFACE >>"$log" 2>&1 &
+    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETWORK_INTERFACE >>"$log" 2>&1 &
     pid=$!;progress $pid
     df >>"$log" 2>&1
     rm ${INSTALLER_PATH}/setup-ubuntu.sh
@@ -311,7 +311,7 @@ SWAP_SIZE=0
 ARCH=""
 UBUNTU_VERSION=""
 PACKAGE_URL=""
-NETOWRK_INTERFACE="ens3"
+NETWORK_INTERFACE="ens3"
 
 # Remove a pre-existing log file.
 if [ -f $log ]; then
@@ -327,7 +327,7 @@ do
         d) DISK_NAME=$OPTARG;;
         e) USERNAME=$OPTARG;;
         h) usage;;
-        i) NETOWRK_INTERFACE=$OPTARG;;
+        i) NETWORK_INTERFACE=$OPTARG;;
         m) VM_NAME=$OPTARG;;
         o) PASSWORD=$OPTARG;;
         p) PACKAGE_URL=$OPTARG;;
@@ -347,7 +347,7 @@ cecho UBUNTU_VERSION=$UBUNTU_VERSION
 cecho PACKAGE_URL=$PACKAGE_URL
 cecho USERNAME=$USERNAME
 cecho PASSWORD=$PASSWORD
-cecho NETOWRK_INTERFACE=$NETOWRK_INTERFACE
+cecho NETWORK_INTERFACE=$NETWORK_INTERFACE
 cecho
 
 if [ -z $DISK_NAME ]; then
