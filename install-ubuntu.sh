@@ -306,7 +306,6 @@ check_ubuntu "all"
 # Init variables
 INSTALLER_PATH="/mnt/installer"
 VM_NAME=""
-NUM_CPUS=0
 DISK_NAME=""
 SWAP_SIZE=0
 ARCH=""
@@ -341,7 +340,6 @@ shift "$(( $OPTIND - 1 ))"
 
 
 cecho VM_NAME=$VM_NAME
-cecho NUM_CPUS=$NUM_CPUS
 cecho DISK_NAME=$DISK_NAME
 cecho SWAP_SIZE=$SWAP_SIZE
 cecho ARCH=$ARCH
