@@ -193,7 +193,7 @@ function usage() {
     echo "  * -i <network-interface> : ens3 for kvm, enp1s0 for real machine"
     echo "  * -h                     : This help"
     echo
-    echo "sudo ./install.sh -m box549 -c 2 -d /dev/vdb -s 4096 -w 512 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e mike -o aaaaaa -i enp1s0"
+    echo "sudo ./install.sh -m box549 -c 2 -d /dev/vdb -s 4096 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e mike -o aaaaaa -i enp1s0"
 }
 
 function check_tools() {
