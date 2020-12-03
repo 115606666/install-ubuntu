@@ -107,6 +107,8 @@ grub-pc	grub-pc/install_devices	multiselect	$DISK_NAME" | debconf-set-selections
     apt-get -y install $LATEST_KERNEL_IMAGE \
                        $LATEST_KERNEL_IMAGE_EXTRA  \
                        linux-firmware
+
+    grub-install --boot-directory=/boot $DISK_NAME
 }
 
 function install_openssh() {
