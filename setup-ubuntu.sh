@@ -261,7 +261,32 @@ function install_extra_packages() {
 
 function setup_network() {
     # setup network setting file
-    if [ $UBUNTU_VERSION = "focal" ] ; then
+    local method
+    if [ $UBUNTU_VERSION = "precise" ] ; then
+        method="interfaces"
+    elif [ $UBUNTU_VERSION = "trusty" ] ; then
+        method="interfaces"
+    elif [ $UBUNTU_VERSION = "xenial" ] ; then
+        method="interfaces"
+    elif [ $UBUNTU_VERSION = "bionic" ] ; then
+        method="netplan"
+    elif [ $UBUNTU_VERSION = "focal" ] ; then
+        method="netplan"
+    else
+        echo "setup_network() not support $UBUNTU_VERSION yet."
+        return
+    fi
+
+    if [ $method = "interfaces"]; then
+        cat > /etc/network/interfaces << __EOF
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+
+auto ${NETWORK_INTERFACE}
+iface ${NETWORK_INTERFACE} inet dhcp
+__EOF
+    elif [ $method = "netplan"]; then
         cat > /etc/netplan/01-netcfg.yaml << __EOF
 network:
         version: 2
@@ -270,9 +295,6 @@ network:
                         dhcp4: true
 __EOF
         print_file /etc/netplan/01-netcfg.yaml
-    else
-        echo "setup_network() not support $UBUNTU_VERSION yet."
-        return
     fi
 
     cat >> /etc/hosts << __EOF
@@ -303,7 +325,9 @@ function apt_upgrade() {
 }
 
 function setup_grub() {
-    sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
+    if [ $UBUNTU_VERSION = "precise" ] ; then
+        sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
+    fi
     print_file /etc/default/grub
     update-grub
 }
