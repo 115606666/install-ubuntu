@@ -175,7 +175,7 @@ function apt_update() {
 
 function copyright_msg() {
 
-    echo `basename ${0}`" v${VER} - Install Ubuntu 20.04."
+    echo `basename ${0}`" v${VER} - Install Ubuntu."
     echo
 }
 
@@ -193,12 +193,12 @@ function usage() {
     echo "  * -a <arch>              : i386, amd64, armhf, ..."
     echo "  * -u <ubuntu-version>    : lucid, precise, trusty, xenial, bionic, focal"
     echo "  * -p <package-url>       : http://mirror01.idc.hinet.net/ubuntu"
-    echo "  * -e <username>          : mike"
-    echo "  * -o <password>          : aaaaaa"
+    echo "  * -e <username>          : user"
+    echo "  * -o <password>          : pass"
     echo "  * -i <network-interface> : ens3 for kvm, enp1s0 for real machine"
     echo "  * -h                     : This help"
     echo
-    echo "sudo ./install.sh -m box549 -d /dev/vdb -s 4096 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e mike -o aaaaaa -i enp1s0"
+    echo "sudo ./install.sh -m box549 -d /dev/vdb -s 4096 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e user -o pass -i enp1s0"
 }
 
 function check_tools() {
