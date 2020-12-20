@@ -167,7 +167,7 @@ grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash" | debconf-set-sele
         # Below dump from box571 by below
         # sudo apt-get install debconf-utils
         # sudo debconf-get-selections | grep grub-pc
-        echo "grub-pc grub-pc/timeout string  10
+        echo "grub-pc grub-pc/timeout string 3
 grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
 grub-pc grub-pc/kopt_extracted  boolean false
 grub-pc grub2/no_efi_extra_removable    boolean false
@@ -325,6 +325,7 @@ function apt_upgrade() {
 }
 
 function setup_grub() {
+    print_file /etc/default/grub
     if [ $UBUNTU_VERSION = "bionic" ] ; then
         # default GRUB_TIMEOUT=" 10"
         sed -i 's/GRUB_TIMEOUT=\" 10\"/GRUB_TIMEOUT=0/' /etc/default/grub
