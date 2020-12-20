@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-
+# 12.04 precise
+# 14.04 trusty
+# 16.04 xenial
+# 18.04 bionic
+# 20.04 focal
 
 function usage() {
     cat << __EOF
@@ -70,36 +74,156 @@ __EOF
 }
 
 function install_kernel() {
-    # Below by
-    # apt-get install debconf-utils
-    # debconf-get-selections | grep grub-pc
-    echo "grub-pc	grub-pc/hidden_timeout	boolean	true
-grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
-grub-pc	grub2/kfreebsd_cmdline	string	
-grub-pc	grub-pc/chainload_from_menu.lst	boolean	true
-grub-pc	grub2/linux_cmdline	string	
-grub-pc	grub-pc/install_devices_failed_upgrade	boolean	true
-grub-pc	grub2/update_nvram	boolean	true
-grub-pc	grub-pc/timeout	string	10
-grub-pc	grub2/no_efi_extra_removable	boolean	false
-grub-pc	grub-pc/install_devices_failed	boolean	false
-grub-pc	grub-efi/install_devices_disks_changed	multiselect	
-grub-pc	grub-efi/install_devices_empty	boolean	false
-grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
-grub-pc	grub-pc/install_devices_disks_changed	multiselect	   $DISK_NAME
-grub-pc	grub2/device_map_regenerated	note	
-grub-pc	grub-pc/install_devices_empty	boolean	false
-grub-pc	grub-efi/install_devices	multiselect	
-grub-pc	grub2/kfreebsd_cmdline_default	string	quiet splash
-grub-pc	grub-pc/kopt_extracted	boolean	false
-grub-pc	grub2/unsigned_kernels	note	
-grub-pc	grub-efi/install_devices_failed	boolean	false
-grub-pc	grub2/linux_cmdline_default	string	
-grub-pc	grub-pc/install_devices	multiselect	$DISK_NAME" | debconf-set-selections
+    local LATEST_KERNEL_IMAGES
+    local LATEST_KERNEL_IMAGE
+    local LATEST_KERNEL_IMAGE_EXTRA
 
-    local LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}'`
-    local LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
-    local LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+    #################
+    # precise 12.04 #
+    #################
+    if [ $UBUNTU_VERSION = "precise" ] ; then
+        # below copy from install-04.sh
+        LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}'`
+        LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-3 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        echo "grub-pc	grub-pc/install_devices_empty	boolean	false
+grub-pc	grub2/kfreebsd_cmdline_default	string	quiet splash
+grub-pc	grub2/linux_cmdline_default	string
+grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
+grub-pc	grub2/linux_cmdline	string
+grub-pc	grub-pc/timeout	string	10
+grub-pc	grub-pc/install_devices_disks_changed	multiselect    $DISK_NAME
+grub-pc	grub-pc/kopt_extracted	boolean	false
+grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
+grub-pc	grub-pc/chainload_from_menu.lst	boolean	true
+grub-pc	grub-pc/hidden_timeout	boolean	true
+grub-pc	grub-pc/install_devices	multiselect	$DISK_NAME
+grub-pc	grub2/device_map_regenerated	note
+grub-pc	grub-pc/install_devices_failed_upgrade	boolean	true
+grub-pc	grub-pc/install_devices_failed	boolean	false
+grub-pc	grub2/kfreebsd_cmdline	string" | debconf-set-selections
+    ################
+    # trusty 14.04 #
+    ################
+    elif [ $UBUNTU_VERSION = "trusty" ] ; then
+        # below copy from install-04.sh
+        LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}'`
+        LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-3 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-image-extra | grep linux-image-extra-3 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        echo "grub-pc	grub-pc/install_devices_empty	boolean	false
+grub-pc	grub2/kfreebsd_cmdline_default	string	quiet splash
+grub-pc	grub2/linux_cmdline_default	string
+grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
+grub-pc	grub2/linux_cmdline	string
+grub-pc	grub-pc/timeout	string	10
+grub-pc	grub-pc/install_devices_disks_changed	multiselect    $DISK_NAME
+grub-pc	grub-pc/kopt_extracted	boolean	false
+grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
+grub-pc	grub-pc/chainload_from_menu.lst	boolean	true
+grub-pc	grub-pc/hidden_timeout	boolean	true
+grub-pc	grub-pc/install_devices	multiselect	$DISK_NAME
+grub-pc	grub2/device_map_regenerated	note
+grub-pc	grub-pc/install_devices_failed_upgrade	boolean	true
+grub-pc	grub-pc/install_devices_failed	boolean	false
+grub-pc	grub2/kfreebsd_cmdline	string" | debconf-set-selections
+    ################
+    # xenial 16.04 #
+    ################
+    elif [ $UBUNTU_VERSION = "xenial" ] ; then
+        # Bug in kernel 4.13 HWE for change display resolution https://goo.gl/5RCPMP
+        LATEST_KERNEL_IMAGE=linux-image-generic-lts-xenial
+        LATEST_KERNEL_IMAGE_EXTRA=linux-image-extra-virtual-lts-xenial
+        # Can't shutdown without dbus
+        # Failed to connect to bus: No such file or directory
+        apt-get install -y dbus
+        # Below dump from box43 by below
+        # sudo apt-get install debconf-utils
+        # sudo debconf-get-selections | grep grub-pc
+        echo "grub-pc grub-pc/mixed_legacy_and_grub2  boolean true
+grub-pc grub-pc/kopt_extracted  boolean false
+grub-pc grub2/kfreebsd_cmdline  string
+grub-pc grub2/linux_cmdline_default     string
+grub-pc grub-pc/timeout string  2
+grub-pc grub-pc/install_devices_disks_changed   multiselect
+grub-pc grub-pc/postrm_purge_boot_grub  boolean false
+grub-pc grub2/update_nvram      boolean true
+grub-pc grub2/force_efi_extra_removable boolean false
+grub-pc grub2/linux_cmdline     string
+grub-pc grub-pc/install_devices_failed_upgrade  boolean true
+grub-pc grub-pc/install_devices multiselect     $DISK_NAME
+grub-pc grub2/device_map_regenerated    note
+grub-pc grub-pc/chainload_from_menu.lst boolean true
+grub-pc grub-pc/install_devices_failed  boolean false
+grub-pc grub-pc/hidden_timeout  boolean false
+grub-pc grub-pc/install_devices_empty   boolean false
+grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash" | debconf-set-selections
+    ################
+    # bionic 18.04 #
+    ################
+    elif [ $UBUNTU_VERSION = "bionic" ] ; then
+        LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort -V | awk '{print $1}'`
+        LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-4 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-4 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        # Below dump from box571 by below
+        # sudo apt-get install debconf-utils
+        # sudo debconf-get-selections | grep grub-pc
+        echo "grub-pc grub-pc/timeout string  10
+grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
+grub-pc grub-pc/kopt_extracted  boolean false
+grub-pc grub2/no_efi_extra_removable    boolean false
+grub-pc grub-pc/install_devices_failed  boolean false
+grub-pc grub-pc/chainload_from_menu.lst boolean true
+grub-pc grub-pc/install_devices multiselect     $DISK_NAME
+grub-pc grub2/linux_cmdline     string
+grub-pc grub-pc/hidden_timeout  boolean true
+grub-pc grub2/kfreebsd_cmdline  string
+grub-pc grub-pc/mixed_legacy_and_grub2  boolean true
+grub-pc grub-pc/postrm_purge_boot_grub  boolean false
+grub-pc grub2/linux_cmdline_default     string
+grub-pc grub2/device_map_regenerated    note
+grub-pc grub-pc/install_devices_failed_upgrade  boolean true
+grub-pc grub2/unsigned_kernels  note
+grub-pc grub-pc/install_devices_empty   boolean false
+grub-pc grub2/update_nvram      boolean true
+grub-pc grub-pc/install_devices_disks_changed   multiselect        $DISK_NAME"  | debconf-set-selections
+    ###############
+    # focal 20.04 #
+    ###############
+    elif [ $UBUNTU_VERSION = "focal" ] ; then
+        LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}'`
+        LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        # Below dump from box110 by below
+        # sudo apt-get install debconf-utils
+        # sudo debconf-get-selections | grep grub-pc
+        echo "grub-pc grub2/unsigned_kernels  note
+grub-pc grub2/linux_cmdline     string
+grub-pc grub-pc/timeout string  0
+grub-pc grub-efi/install_devices        multiselect
+grub-pc grub-efi/install_devices_disks_changed  multiselect
+grub-pc grub-pc/postrm_purge_boot_grub  boolean false
+grub-pc grub2/kfreebsd_cmdline  string
+grub-pc grub2/linux_cmdline_default     string
+grub-pc grub-pc/install_devices_empty   boolean false
+grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
+grub-pc grub2/update_nvram      boolean true
+grub-pc grub-pc/hidden_timeout  boolean true
+grub-pc grub2/device_map_regenerated    note
+grub-pc grub2/no_efi_extra_removable    boolean false
+grub-pc grub-pc/install_devices_disks_changed   multiselect        $DISK_NAME
+grub-pc grub-efi/install_devices_empty  boolean false
+grub-pc grub-pc/install_devices multiselect     $DISK_NAME
+grub-pc grub-pc/chainload_from_menu.lst boolean true
+grub-pc grub-pc/install_devices_failed  boolean false
+grub-pc grub-efi/install_devices_failed boolean false
+grub-pc grub-pc/install_devices_failed_upgrade  boolean true
+grub-pc grub-pc/mixed_legacy_and_grub2  boolean true
+grub-pc grub-pc/kopt_extracted  boolean false" | debconf-set-selections
+    else
+        echo "install_kernel() not support $UBUNTU_VERSION yet."
+        return
+    fi
+
     echo LATEST_KERNEL_IMAGES=$LATEST_KERNEL_IMAGES
     echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
     echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA

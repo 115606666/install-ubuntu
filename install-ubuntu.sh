@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# 12.04 precise
+# 14.04 trusty
+# 16.04 xenial
+# 18.04 bionic
+# 20.04 focal
 
 # Version
 VER="0.0.1-dev"
