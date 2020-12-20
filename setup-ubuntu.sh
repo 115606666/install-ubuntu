@@ -91,7 +91,7 @@ grub-pc	grub2/kfreebsd_cmdline_default	string	quiet splash
 grub-pc	grub2/linux_cmdline_default	string
 grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
 grub-pc	grub2/linux_cmdline	string
-grub-pc	grub-pc/timeout	string	10
+grub-pc	grub-pc/timeout	string	0
 grub-pc	grub-pc/install_devices_disks_changed	multiselect    $DISK_NAME
 grub-pc	grub-pc/kopt_extracted	boolean	false
 grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
@@ -115,7 +115,7 @@ grub-pc	grub2/kfreebsd_cmdline_default	string	quiet splash
 grub-pc	grub2/linux_cmdline_default	string
 grub-pc	grub-pc/postrm_purge_boot_grub	boolean	false
 grub-pc	grub2/linux_cmdline	string
-grub-pc	grub-pc/timeout	string	10
+grub-pc	grub-pc/timeout	string	0
 grub-pc	grub-pc/install_devices_disks_changed	multiselect    $DISK_NAME
 grub-pc	grub-pc/kopt_extracted	boolean	false
 grub-pc	grub-pc/mixed_legacy_and_grub2	boolean	true
@@ -143,7 +143,7 @@ grub-pc	grub2/kfreebsd_cmdline	string" | debconf-set-selections
 grub-pc grub-pc/kopt_extracted  boolean false
 grub-pc grub2/kfreebsd_cmdline  string
 grub-pc grub2/linux_cmdline_default     string
-grub-pc grub-pc/timeout string  2
+grub-pc grub-pc/timeout string  0
 grub-pc grub-pc/install_devices_disks_changed   multiselect
 grub-pc grub-pc/postrm_purge_boot_grub  boolean false
 grub-pc grub2/update_nvram      boolean true
@@ -167,7 +167,7 @@ grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash" | debconf-set-sele
         # Below dump from box571 by below
         # sudo apt-get install debconf-utils
         # sudo debconf-get-selections | grep grub-pc
-        echo "grub-pc grub-pc/timeout string 3
+        echo "grub-pc grub-pc/timeout string  0
 grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
 grub-pc grub-pc/kopt_extracted  boolean false
 grub-pc grub2/no_efi_extra_removable    boolean false
