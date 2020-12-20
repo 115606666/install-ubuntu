@@ -167,7 +167,9 @@ grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash" | debconf-set-sele
         # Below dump from box571 by below
         # sudo apt-get install debconf-utils
         # sudo debconf-get-selections | grep grub-pc
-        echo "grub-pc grub-pc/timeout string  0
+        # below only one space is allow between string and 0
+        # otherwise will become GRUB_TIMEOUT=" 0"
+        echo "grub-pc grub-pc/timeout string 0
 grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
 grub-pc grub-pc/kopt_extracted  boolean false
 grub-pc grub2/no_efi_extra_removable    boolean false
