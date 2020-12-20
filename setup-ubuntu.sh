@@ -277,7 +277,7 @@ function setup_network() {
         return
     fi
 
-    if [ $method = "interfaces"]; then
+    if [ $method = "interfaces" ]; then
         cat > /etc/network/interfaces << __EOF
 # interfaces(5) file used by ifup(8) and ifdown(8)
 auto lo
@@ -286,7 +286,7 @@ iface lo inet loopback
 auto ${NETWORK_INTERFACE}
 iface ${NETWORK_INTERFACE} inet dhcp
 __EOF
-    elif [ $method = "netplan"]; then
+    elif [ $method = "netplan" ]; then
         cat > /etc/netplan/01-netcfg.yaml << __EOF
 network:
         version: 2
@@ -325,7 +325,10 @@ function apt_upgrade() {
 }
 
 function setup_grub() {
-    if [ $UBUNTU_VERSION = "precise" ] ; then
+    if [ $UBUNTU_VERSION = "bionic" ] ; then
+        # default GRUB_TIMEOUT=" 10"
+        sed -i 's/GRUB_TIMEOUT=\" 10\"/GRUB_TIMEOUT=0/' /etc/default/grub
+    elif [ $UBUNTU_VERSION = "focal" ] ; then
         sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
     fi
     print_file /etc/default/grub
