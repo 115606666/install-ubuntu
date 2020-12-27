@@ -38,6 +38,9 @@ function setup_time() {
 function add_user() {
     echo | adduser --quiet --disabled-password $USERNAME
     echo "$USERNAME:$PASSWORD" | chpasswd
+}
+
+function sudo_user() {
     gpasswd -a $USERNAME sudo
     echo $USERNAME ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
 }
@@ -399,3 +402,4 @@ install_kernel
 setup_grub
 apt_upgrade
 apt_clean
+sudo_user
