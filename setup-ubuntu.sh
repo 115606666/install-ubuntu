@@ -146,7 +146,7 @@ grub-pc	grub2/kfreebsd_cmdline	string" | debconf-set-selections
 grub-pc grub-pc/kopt_extracted  boolean false
 grub-pc grub2/kfreebsd_cmdline  string
 grub-pc grub2/linux_cmdline_default     string
-grub-pc grub-pc/timeout string  0
+grub-pc grub-pc/timeout string 0
 grub-pc grub-pc/install_devices_disks_changed   multiselect
 grub-pc grub-pc/postrm_purge_boot_grub  boolean false
 grub-pc grub2/update_nvram      boolean true
