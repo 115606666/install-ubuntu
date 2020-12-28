@@ -203,7 +203,7 @@ grub-pc grub-pc/install_devices_disks_changed   multiselect        $DISK_NAME"  
         # sudo debconf-get-selections | grep grub-pc
         echo "grub-pc grub2/unsigned_kernels  note
 grub-pc grub2/linux_cmdline     string
-grub-pc grub-pc/timeout string  0
+grub-pc grub-pc/timeout string 0
 grub-pc grub-efi/install_devices        multiselect
 grub-pc grub-efi/install_devices_disks_changed  multiselect
 grub-pc grub-pc/postrm_purge_boot_grub  boolean false
