@@ -189,6 +189,7 @@ function usage() {
     echo
     echo "  * -m <machine-name>      : Machine name."
     echo "  * -d </dev/vdx>          : Install disk device."
+    echo "  * -k </dev/vdxn>         : Install disk partition."
     echo "  * -s <swap-size-M>       : SWAP size in mega bytes."
     echo "  * -a <arch>              : i386, amd64, armhf, ..."
     echo "  * -u <ubuntu-version>    : lucid, precise, trusty, xenial, bionic, focal"
@@ -253,7 +254,8 @@ function umount_disk() {
 function mount_installer_disk() {
     ncecho " [x] Mount disk "
     mkdir -p $INSTALLER_PATH >>"$log" 2>&1
-    mount ${DISK_NAME}1 $INSTALLER_PATH >>"$log" 2>&1
+    [ ! -z $DISK_NAME ] && mount ${DISK_NAME}1 $INSTALLER_PATH >>"$log" 2>&1
+    [ ! -z $PART_NAME ] && mount ${PART_NAME}  $INSTALLER_PATH >>"$log" 2>&1
     df >>"$log" 2>&1
     pid=$!;progress $pid
 }
@@ -287,10 +289,13 @@ function mount_for_setup_machine() {
 }
 
 function setup_machine() {
+    local disk_name
     ncecho " [x] Setup machine "
     cp setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
     chmod +x setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
-    chroot $INSTALLER_PATH ./setup-ubuntu.sh $DISK_NAME $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETWORK_INTERFACE >>"$log" 2>&1 &
+    [ ! -z $DISK_NAME ] && disk_name=$DISK_NAME
+    [ -z $DISK_NAME ] && disk_name=${PART_NAME//[0-9]/}
+    chroot $INSTALLER_PATH ./setup-ubuntu.sh $disk_name $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETWORK_INTERFACE >>"$log" 2>&1 &
     pid=$!;progress $pid
     df >>"$log" 2>&1
     rm ${INSTALLER_PATH}/setup-ubuntu.sh
@@ -333,6 +338,7 @@ do
         e) USERNAME=$OPTARG;;
         h) usage;;
         i) NETWORK_INTERFACE=$OPTARG;;
+        k) PART_NAME=$OPTARG;;
         m) VM_NAME=$OPTARG;;
         o) PASSWORD=$OPTARG;;
         p) PACKAGE_URL=$OPTARG;;
@@ -346,6 +352,7 @@ shift "$(( $OPTIND - 1 ))"
 
 cecho VM_NAME=$VM_NAME
 cecho DISK_NAME=$DISK_NAME
+cecho PART_NAME=$PART_NAME
 cecho SWAP_SIZE=$SWAP_SIZE
 cecho ARCH=$ARCH
 cecho UBUNTU_VERSION=$UBUNTU_VERSION
@@ -355,15 +362,17 @@ cecho PASSWORD=$PASSWORD
 cecho NETWORK_INTERFACE=$NETWORK_INTERFACE
 cecho
 
-if [ -z $DISK_NAME ]; then
+if [ -z $DISK_NAME ] && [ -z $PART_NAME ]; then
     usage && exit
 fi
 
 check_tools
 umount_disk
-clean_disk
-partition_disk
-mkfs_ext4
+if [ ! -z $DISK_NAME ]; then
+    clean_disk
+    partition_disk
+    mkfs_ext4
+fi
 mount_installer_disk
 do_debootstrap
 create_swap_file
