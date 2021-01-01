@@ -329,7 +329,7 @@ if [ -f $log ]; then
 fi
 
 # Parse the options
-OPTSTRING=a:d:e:hi:m:o:p:s:u:
+OPTSTRING=a:d:e:hi:k:m:o:p:s:u:
 while getopts ${OPTSTRING} OPT
 do
     case ${OPT} in
