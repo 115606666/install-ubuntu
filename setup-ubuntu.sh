@@ -294,10 +294,10 @@ __EOF
     elif [ $method = "netplan" ]; then
         cat > /etc/netplan/01-netcfg.yaml << __EOF
 network:
-        version: 2
-        ethernets:
-                ${NETWORK_INTERFACE}:
-                        dhcp4: true
+  version: 2
+  ethernets:
+    ${NETWORK_INTERFACE}:
+      dhcp4: true
 __EOF
         print_file /etc/netplan/01-netcfg.yaml
     fi
