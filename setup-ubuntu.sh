@@ -301,12 +301,12 @@ network:
     ${NETWORK_INTERFACE}:
 __EOF
         if [ -z "$IP" ]; then
-            cat > /etc/netplan/01-netcfg.yaml << __EOF
+            cat >> /etc/netplan/01-netcfg.yaml << __EOF
       dhcp4: true
 __EOF
         else
             # todo: add gateway
-            cat > /etc/netplan/01-netcfg.yaml << __EOF
+            cat >> /etc/netplan/01-netcfg.yaml << __EOF
       dhcp4: no
       addresses: [${IP}/16]
       gateway4: 172.16.0.1
