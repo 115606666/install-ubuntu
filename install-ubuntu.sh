@@ -295,7 +295,7 @@ function setup_machine() {
     chmod +x setup-ubuntu.sh ${INSTALLER_PATH} >>"$log" 2>&1
     [ ! -z $DISK_NAME ] && disk_name=$DISK_NAME
     [ -z $DISK_NAME ] && disk_name=${PART_NAME//[0-9]/}
-    chroot $INSTALLER_PATH ./setup-ubuntu.sh $disk_name $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETWORK_INTERFACE >>"$log" 2>&1 &
+    chroot $INSTALLER_PATH ./setup-ubuntu.sh $disk_name $VM_NAME $UBUNTU_VERSION $PACKAGE_URL $USERNAME $PASSWORD $NETWORK_INTERFACE $IP>>"$log" 2>&1 &
     pid=$!;progress $pid
     df >>"$log" 2>&1
     rm ${INSTALLER_PATH}/setup-ubuntu.sh
@@ -322,6 +322,7 @@ ARCH=""
 UBUNTU_VERSION=""
 PACKAGE_URL=""
 NETWORK_INTERFACE="ens3"
+IP=""
 
 # Remove a pre-existing log file.
 if [ -f $log ]; then
@@ -329,7 +330,7 @@ if [ -f $log ]; then
 fi
 
 # Parse the options
-OPTSTRING=a:d:e:hi:k:m:o:p:s:u:
+OPTSTRING=a:d:e:hi:k:m:n:o:p:s:u:
 while getopts ${OPTSTRING} OPT
 do
     case ${OPT} in
@@ -337,13 +338,14 @@ do
         d) DISK_NAME=$OPTARG;;
         e) USERNAME=$OPTARG;;
         h) usage;;
-        i) NETWORK_INTERFACE=$OPTARG;;
+        n) NETWORK_INTERFACE=$OPTARG;;
         k) PART_NAME=$OPTARG;;
         m) VM_NAME=$OPTARG;;
         o) PASSWORD=$OPTARG;;
         p) PACKAGE_URL=$OPTARG;;
         s) SWAP_SIZE=$OPTARG;;
         u) UBUNTU_VERSION=$OPTARG;;
+        i) IP=$OPTARG;;
         *) usage;;
     esac
 done
@@ -360,6 +362,7 @@ cecho PACKAGE_URL=$PACKAGE_URL
 cecho USERNAME=$USERNAME
 cecho PASSWORD=$PASSWORD
 cecho NETWORK_INTERFACE=$NETWORK_INTERFACE
+cecho IP=$IP
 cecho
 
 if [ -z $DISK_NAME ] && [ -z $PART_NAME ]; then

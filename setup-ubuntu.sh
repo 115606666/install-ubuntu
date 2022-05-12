@@ -16,6 +16,7 @@ Example:
     USERNAME:          mike
     PASSWORD:          aaaaaa
     NETWORK_INTERFACE: ens3 or enp1s0
+    IP:                172.16.6.40
 __EOF
 }
 
@@ -298,8 +299,21 @@ network:
   version: 2
   ethernets:
     ${NETWORK_INTERFACE}:
+__EOF
+        if [ -z "$IP" ]; then
+            cat > /etc/network/interfaces << __EOF
       dhcp4: true
 __EOF
+        else
+            # todo: add gateway
+            cat > /etc/network/interfaces << __EOF
+      dhcp4: no
+      addresses: [${IP}/16]
+      gateway4: 172.16.0.1
+      nameservers:
+        addresses: [172.16.0.1]
+__EOF
+        fi
         print_file /etc/netplan/01-netcfg.yaml
     fi
 
