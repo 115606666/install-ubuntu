@@ -382,6 +382,7 @@ echo argv[4]=$4
 echo argv[5]=$5
 echo argv[6]=$6
 echo argv[7]=$7
+echo argv[8]=$8
 
 DISK_NAME=$1
 HOST_NAME=$2
@@ -390,6 +391,7 @@ PACKAGE_URL=$4
 USERNAME=$5
 PASSWORD=$6
 NETWORK_INTERFACE=$7
+IP=$8
 
 echo DISK_NAME=$DISK_NAME
 echo HOST_NAME=$HOST_NAME
@@ -398,8 +400,9 @@ echo PACKAGE_URL=$PACKAGE_URL
 echo USERNAME=$USERNAME
 echo PASSWORD=$PASSWORD
 echo NETWORK_INTERFACE=$NETWORK_INTERFACE
+echo IP=$IP
 
-if [ "$#" -ne 7 ]; then
+if [ "$#" -ne 8 ]; then
     usage && exit
 fi
 
