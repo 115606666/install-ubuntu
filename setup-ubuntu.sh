@@ -402,7 +402,7 @@ echo PASSWORD=$PASSWORD
 echo NETWORK_INTERFACE=$NETWORK_INTERFACE
 echo IP=$IP
 
-if [ "$#" -ne 8 ]; then
+if [ "$#" -lt 7 ]; then
     usage && exit
 fi
 
