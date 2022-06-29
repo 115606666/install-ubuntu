@@ -196,7 +196,8 @@ function usage() {
     echo "  * -p <package-url>       : http://mirror01.idc.hinet.net/ubuntu"
     echo "  * -e <username>          : user"
     echo "  * -o <password>          : pass"
-    echo "  * -i <network-interface> : ens3 for kvm, enp1s0 for real machine"
+    echo "  * -n <network-interface> : ens3 for kvm, enp1s0 for real machine"
+    echo "  * -i <ip-address>        : IP address"
     echo "  * -h                     : This help"
     echo
     echo "sudo ./install.sh -m box549 -d /dev/vdb -s 4096 -a amd64 -u focal -p http://mirror01.idc.hinet.net/ubuntu -e user -o pass -i enp1s0"
