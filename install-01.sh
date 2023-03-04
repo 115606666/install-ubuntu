@@ -31,12 +31,15 @@ sudo service ssh restart
 # ppk43
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAid5v0ud2Y5xJgwziGnETGc7b7dh55dmnMf+uFuLx0gREJTtIwoiUhgMffRhR5/3FEquoASQnY1yBHxQHnRF7FaD1xA+pJlUnx9KJNol+PdPIrnWHTS6pjuDe+0HUt85KU3lt6EikLRIjUbQnCFmIN4aHnYmsi2VUIpenJLMzSK6jMpbqHRTkY3nSS3D1QNyweyY3FkuDYGCNKuqcYvNRFGV140Zd3F7+zPi/Exl5rSf+iYM3ksrCm6DhtHDGOEYBba2XfxC067S97IhivbdGzSX2SCskWC4ee9ONgAcdiVA45bJB1k9nJRbg3MOo9FEX/auI0hEEw4hxjTxawMIakw==" >> authorized_keys
 
+# 122
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDObRDtR0Tw+iSL3pIVNR01meTSSyOt5qIJ+qs7Mug38jF0RptdcDUoDxbUuA7hQzf1d9MdqjlVbtnLwa7ODvjpwP0cuN5hlWWw4Vhz+DyefRdMLSGJQj9S4x+GkKSfD3ZOUbNnVpVbGPr1ia0Z7JsjnNm2vgOzJKYxUI6hYfYcR+/BGseRb62nJlgM4K3Swz1LXQUhngaM3m9oZQRr8TnqvXy5I43fKwAtKYDkBRZUC4JPJ/GzD66yukigSxxOtptt7Crh70Bfi8aX5E3B5mkgcLbrvrHP05mP7ltL4wQORYprtGgQOcHvLa1MJfO2tF0k0BDEopo6tl2RAK6Q6uokBiIwqVlAdSEpNM04Irtwu1qqJhOyRvbyFRtueFLKVG3ZoBjJLITZ96gPEQV2dZLH0JaR5wfMLi06cWQKDS79iU3kbMjKhtQ5Omm7z93D1m/UeysM/86NGnPKjVW69VmNwrLB3gR+FNiA9GIp4xZRTag6JKF7uiQsVn9DLs2sLNs=" >> authorized_keys
+
 chmod 644 authorized_keys
 sudo mkdir /home/$USERNAME/.ssh
 sudo chmod 711 /home/$USERNAME/.ssh
 sudo mv authorized_keys /home/$USERNAME/.ssh
 sudo chown -R mike.mike /home/$USERNAME/.ssh
 
-echo $USERNAME ALL=\(ALL\) NOPASSWD: ALL >> /etc/sudoers
+echo $USERNAME ALL=\(ALL\) NOPASSWD: ALL | sudo tee -a /etc/sudoers
 
 ip a
