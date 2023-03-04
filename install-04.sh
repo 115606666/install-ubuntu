@@ -184,7 +184,7 @@ elif [ $UBUNTU_VERSION = "bionic" ] ; then
     echo LATEST_KERNEL_IMAGE=$LATEST_KERNEL_IMAGE
     echo LATEST_KERNEL_IMAGE_EXTRA=$LATEST_KERNEL_IMAGE_EXTRA
     apt-get install -y $LATEST_KERNEL_IMAGE $LATEST_KERNEL_IMAGE_EXTRA
-elif [ $UBUNTU_VERSION = "focal" ] ; then
+elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" ] ; then
     LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}'`
     LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
     LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-5 | grep generic | sort -V | awk '{print $1}' | tail -n1`
