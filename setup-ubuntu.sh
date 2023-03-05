@@ -4,6 +4,7 @@
 # 16.04 xenial
 # 18.04 bionic
 # 20.04 focal
+# 22.04 jammy
 
 function usage() {
     cat << __EOF
@@ -280,6 +281,8 @@ function setup_network() {
         method="netplan"
     elif [ $UBUNTU_VERSION = "focal" ] ; then
         method="netplan"
+    elif [ $UBUNTU_VERSION = "jammy" ] ; then
+        method="netplan"
     else
         echo "setup_network() not support $UBUNTU_VERSION yet."
         return
@@ -350,7 +353,7 @@ function setup_grub() {
     if [ $UBUNTU_VERSION = "bionic" ] ; then
         # default GRUB_TIMEOUT=" 10"
         sed -i 's/GRUB_TIMEOUT=\" 10\"/GRUB_TIMEOUT=0/' /etc/default/grub
-    elif [ $UBUNTU_VERSION = "focal" ] ; then
+    elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" ] ; then
         sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
     fi
     print_file /etc/default/grub
