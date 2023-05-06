@@ -2,3 +2,5 @@ getopts*.sh
 grub-pc-debconf.txt
 install.sh.log
 oab-java.sh
+box133-dmesg-20220927-1.txt
+install-ubuntu.sh.log
