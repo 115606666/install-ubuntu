@@ -226,8 +226,10 @@ function start_openssh_server() {
 
 function install_openssh_keys() {
     ncecho " [x] Install openssh keys "
-    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOdfDL2rt6w7rwfT5NF8yYS/4fH9TEXGJIXpeuzDaRdKpNdQw9xwfhrTdH4UQdyu6roQfi0k9L/HWvoH93sIOjcXBf2+nKokqEQxQDVcJJ2eNVR2KsVddCseqkoOtiTK7of7fRI8vO0ZAIzrKu49Qw/jMIvujHKkx6rBSvrWxNqMuPkKrOzHrkM/EA+6kAPgcYtMOdc0DFytOFjIiLksMkthGGTcB0hr/Sfa9CxMIBP54M9jZtV4BqDuvFHrAbG23to8CDZB16MEJrKY47fdvjw2iQ5kAIgvmPYCsHb2YHjRpKEGkT77B/LOcVy5kCWFzW7Ox5ct15PQyF3X8uiCpd" >> authorized_keys
+    # 43
     echo "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAid5v0ud2Y5xJgwziGnETGc7b7dh55dmnMf+uFuLx0gREJTtIwoiUhgMffRhR5/3FEquoASQnY1yBHxQHnRF7FaD1xA+pJlUnx9KJNol+PdPIrnWHTS6pjuDe+0HUt85KU3lt6EikLRIjUbQnCFmIN4aHnYmsi2VUIpenJLMzSK6jMpbqHRTkY3nSS3D1QNyweyY3FkuDYGCNKuqcYvNRFGV140Zd3F7+zPi/Exl5rSf+iYM3ksrCm6DhtHDGOEYBba2XfxC067S97IhivbdGzSX2SCskWC4ee9ONgAcdiVA45bJB1k9nJRbg3MOo9FEX/auI0hEEw4hxjTxawMIakw==" >> authorized_keys
+    # 147
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3AJrjs8SM2k4pXQd09awLqhx6e8O7ejrPSQf+KJEDDTjEr5OuQquSPjHOd6OdUNbj7Qodn6TX+VkCmstXPZXdUZQ8SK08b2kSgtsJLSqoRnUQW7km0MSNnhFdmjv7Q9+cCcygY/bTFcNDh1l5Jm4C2RnHXwifQYvuo0gpEP86OMuC9BY8aXLMkbWAzDWkd6HjCCufL1Fn56ZCKtBzisEuIxJ8st0mi4BDxqsp2/OkmLAmbE+FsEtPZtjhBYGSMZFV7JdkcHefU7U5pcZJU6o1uqjjTp6tMv73pBQzcfizTRfGDtvHWXLialG0PJ91fkghbPP+LFDgX6MDaVgxWwWSqzvUzOTWExFow6oT18jdKffOMhfw/gS9sPNONC8B5mChE8YyEkQEExbu1+QhtZ2XWs1USDC1cZBtlxZTi/C4pP3WEXiBV/s7ztdl7jx8Czui+IH5E9FyjbYWZjb7m715tHiyDsyWf1glGc8JEFVv3vYPdPq5D4whEmB9gyI3P1M=" >> authorized_keys
 
     chmod 644 authorized_keys >>"$log" 2>&1
     mkdir /home/$USERNAME/.ssh >>"$log" 2>&1
