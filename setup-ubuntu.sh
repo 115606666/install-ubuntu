@@ -5,6 +5,7 @@
 # 18.04 bionic
 # 20.04 focal
 # 22.04 jammy
+# 24.04 noble
 
 function usage() {
     cat << __EOF
@@ -227,6 +228,41 @@ grub-pc grub-efi/install_devices_failed boolean false
 grub-pc grub-pc/install_devices_failed_upgrade  boolean true
 grub-pc grub-pc/mixed_legacy_and_grub2  boolean true
 grub-pc grub-pc/kopt_extracted  boolean false" | debconf-set-selections
+    ###############
+    # noble 24.04 #
+    ###############
+    elif [ $UBUNTU_VERSION = "noble" ] ; then
+        LATEST_KERNEL_IMAGES=`apt-cache search linux-image | grep linux-image-6 | grep generic | sort -V | awk '{print $1}'`
+        LATEST_KERNEL_IMAGE=`apt-cache search linux-image | grep linux-image-6 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        LATEST_KERNEL_IMAGE_EXTRA=`apt-cache search linux-modules-extra | grep linux-modules-extra-6 | grep generic | sort -V | awk '{print $1}' | tail -n1`
+        # Below dump from box892 by below
+        # sudo apt-get install debconf-utils
+        # sudo debconf-get-selections | grep grub-pc
+        echo "grub-pc grub-efi/cloud_style_installation       boolean false
+grub-pc grub-efi/install_devices        multiselect
+grub-pc grub-efi/install_devices_disks_changed  multiselect
+grub-pc grub-efi/install_devices_empty  boolean false
+grub-pc grub-efi/install_devices_failed boolean false
+grub-pc grub-pc/chainload_from_menu.lst boolean true
+grub-pc grub-pc/cloud_style_installation        boolean false
+grub-pc grub-pc/hidden_timeout  boolean true
+grub-pc grub-pc/install_devices multiselect     /dev/vda
+grub-pc grub-pc/install_devices_disks_changed   multiselect
+grub-pc grub-pc/install_devices_empty   boolean false
+grub-pc grub-pc/install_devices_failed  boolean false
+grub-pc grub-pc/install_devices_failed_upgrade  boolean true
+grub-pc grub-pc/kopt_extracted  boolean false
+grub-pc grub-pc/mixed_legacy_and_grub2  boolean true
+grub-pc grub-pc/postrm_purge_boot_grub  boolean false
+grub-pc grub-pc/timeout string  0
+grub-pc grub2/enable_os_prober  boolean false
+grub-pc grub2/kfreebsd_cmdline  string
+grub-pc grub2/kfreebsd_cmdline_default  string  quiet splash
+grub-pc grub2/linux_cmdline     string
+grub-pc grub2/linux_cmdline_default     string
+grub-pc grub2/no_efi_extra_removable    boolean false
+grub-pc grub2/unsigned_kernels  note
+grub-pc grub2/update_nvram      boolean true" | debconf-set-selections
     else
         echo "install_kernel() not support $UBUNTU_VERSION yet."
         return
@@ -282,6 +318,8 @@ function setup_network() {
     elif [ $UBUNTU_VERSION = "focal" ] ; then
         method="netplan"
     elif [ $UBUNTU_VERSION = "jammy" ] ; then
+        method="netplan"
+    elif [ $UBUNTU_VERSION = "noble" ] ; then
         method="netplan"
     else
         echo "setup_network() not support $UBUNTU_VERSION yet."
@@ -353,7 +391,7 @@ function setup_grub() {
     if [ $UBUNTU_VERSION = "bionic" ] ; then
         # default GRUB_TIMEOUT=" 10"
         sed -i 's/GRUB_TIMEOUT=\" 10\"/GRUB_TIMEOUT=0/' /etc/default/grub
-    elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" ] ; then
+    elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" || [ $UBUNTU_VERSION = "noble"] ; then
         sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
     fi
     print_file /etc/default/grub
