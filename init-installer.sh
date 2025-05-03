@@ -232,7 +232,7 @@ function install_openssh_keys() {
     mkdir /home/$USERNAME/.ssh >>"$log" 2>&1
     chmod 711 /home/$USERNAME/.ssh >>"$log" 2>&1
     mv authorized_keys /home/$USERNAME/.ssh >>"$log" 2>&1
-    chown -R user.user /home/$USERNAME/.ssh >>"$log" 2>&1
+    chown -R ${USERNAME}.${USERNAME} /home/$USERNAME/.ssh >>"$log" 2>&1
 
     pid=$!;progress $pid
 }
