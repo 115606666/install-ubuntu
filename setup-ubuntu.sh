@@ -354,6 +354,8 @@ __EOF
 __EOF
         fi
         print_file /etc/netplan/01-netcfg.yaml
+        chmod 600 /etc/netplan/01-netcfg.yaml
+        ls -la /etc/netplan/01-netcfg.yaml
     fi
 
     cat >> /etc/hosts << __EOF
