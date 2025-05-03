@@ -388,7 +388,7 @@ function setup_grub() {
     if [ $UBUNTU_VERSION = "bionic" ] ; then
         # default GRUB_TIMEOUT=" 10"
         sed -i 's/GRUB_TIMEOUT=\" 10\"/GRUB_TIMEOUT=0/' /etc/default/grub
-    elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" || [ $UBUNTU_VERSION = "noble"] ; then
+    elif [ $UBUNTU_VERSION = "focal" ] || [ $UBUNTU_VERSION = "jammy" ] || [ $UBUNTU_VERSION = "noble" ] ; then
         sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=0/' /etc/default/grub
     fi
     print_file /etc/default/grub
